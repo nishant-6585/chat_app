@@ -11,17 +11,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AuthService authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Center(
-          child: ElevatedButton(
-            child: const Text("Logout"),
-            onPressed: () {
-              authService.signOut();
-            },
-          ),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text(
+          "Chat List",
+          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
         ),
       ),
     );
