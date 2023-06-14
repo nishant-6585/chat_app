@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "195037543304",
+    "project_id": "flutter-chat-app-4b927",
+    "storage_bucket": "flutter-chat-app-4b927.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195037543304:android:7077b9f0e18b5485b8d83d",
+        "android_client_info": {
+          "package_name": "com.zensar.chat.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195037543304-kfsslv5nitgsum31cca8h6pvkehf7hha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpvmiCofxMLn7JBM-EcmEF_xhtZntkxkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195037543304-kfsslv5nitgsum31cca8h6pvkehf7hha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
