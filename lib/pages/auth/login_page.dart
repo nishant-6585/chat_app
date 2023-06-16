@@ -76,9 +76,6 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (val) {
                     setState(() {
                       email = val;
-                      if (kDebugMode) {
-                        print(email);
-                      }
                     });
                   },
                   validator: (val) {
@@ -112,9 +109,6 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (val) {
                     setState(() {
                       password = val;
-                      if (kDebugMode) {
-                        print(password);
-                      }
                     });
                   },
                 ),

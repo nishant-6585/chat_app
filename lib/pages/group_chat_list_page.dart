@@ -5,6 +5,7 @@ import '../services/auth_service.dart';
 import '../services/database_service.dart';
 import '../widgets/group_tile.dart';
 import '../widgets/widgets.dart';
+import 'group_search_page.dart';
 import 'home_page.dart';
 import 'auth/login_page.dart';
 
@@ -63,6 +64,13 @@ class _GroupChatListPageState extends State<GroupChatListPage> {
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  nextScreen(context, const GroupSearchPage());
+                },
+                icon: const Icon(Icons.search))
+          ],
         ),
         drawer: Drawer(
           child: ListView(

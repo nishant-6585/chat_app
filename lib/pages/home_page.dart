@@ -1,7 +1,7 @@
 import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/pages/profile_page.dart';
-import 'package:chat_app/pages/search_page.dart';
+import 'package:chat_app/pages/user_search_page.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -28,15 +28,9 @@ class _HomePageState extends State<HomePage> {
 
   void getUserData() async {
     await HelperFunction.getUserEmail().then((value) {
-      /*setState(() {
-        email = value!;
-      });*/
       email = value!;
     });
     await HelperFunction.getUserName().then((value) {
-      /*setState(() {
-        userName = value!;
-      });*/
       userName = value!;
     });
   }
@@ -48,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                nextScreen(context, const SearchPage());
+                nextScreen(context, const UserSearchPage());
               },
               icon: const Icon(Icons.search))
         ],
