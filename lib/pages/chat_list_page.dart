@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'group_chat_list_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ChatListPage extends StatefulWidget {
+  const ChatListPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ChatListPage> createState() => _ChatListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ChatListPageState extends State<ChatListPage> {
   AuthService authService = AuthService();
   String userName = "";
   String email = "";

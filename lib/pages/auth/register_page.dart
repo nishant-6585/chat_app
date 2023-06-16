@@ -1,6 +1,6 @@
 import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/pages/auth/login_page.dart';
-import 'package:chat_app/pages/home_page.dart';
+import 'package:chat_app/pages/chat_list_page.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -196,7 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
               await HelperFunction.saveUserName(fullName);
               await HelperFunction.saveUserEmail(email);
               if(context.mounted) {
-                nextScreenReplace(context, const HomePage());
+                nextScreenReplace(context, const ChatListPage());
               }
 
             } else {

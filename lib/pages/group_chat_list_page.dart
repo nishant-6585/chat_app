@@ -6,7 +6,7 @@ import '../services/database_service.dart';
 import '../widgets/group_tile.dart';
 import '../widgets/widgets.dart';
 import 'group_search_page.dart';
-import 'home_page.dart';
+import 'chat_list_page.dart';
 import 'auth/login_page.dart';
 
 class GroupChatListPage extends StatefulWidget {
@@ -97,7 +97,7 @@ class _GroupChatListPageState extends State<GroupChatListPage> {
               ),
               ListTile(
                 onTap: () {
-                  nextScreenReplace(context, const HomePage());
+                  nextScreenReplace(context, const ChatListPage());
                 },
                 selectedColor: Theme.of(context).primaryColor,
                 contentPadding:

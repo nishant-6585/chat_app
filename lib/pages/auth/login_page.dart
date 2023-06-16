@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../home_page.dart';
+import '../chat_list_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
           await HelperFunction.saveUserEmail(email);
 
           if (context.mounted) {
-            nextScreenReplace(context, const HomePage());
+            nextScreenReplace(context, const ChatListPage());
           }
         } else {
           showSnackBar(context, Colors.red, value);

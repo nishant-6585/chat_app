@@ -1,4 +1,4 @@
-import 'package:chat_app/pages/home_page.dart';
+import 'package:chat_app/pages/chat_list_page.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               ListTile(
                 onTap: () {
-                  nextScreenReplace(context, const HomePage());
+                  nextScreenReplace(context, const ChatListPage());
                 },
                 selectedColor: Theme.of(context).primaryColor,
                 contentPadding:
@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               ListTile(
                 onTap: () {
-                  nextScreenReplace(context, const HomePage());
+                  nextScreenReplace(context, const ChatListPage());
                 },
                 selectedColor: Theme.of(context).primaryColor,
                 contentPadding:
