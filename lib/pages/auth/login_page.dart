@@ -61,9 +61,11 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(
                       fontSize: 15, fontWeight: FontWeight.w400),
                 ),
+                const SizedBox(height: 30),
                 kIsWeb
-                    ? Image.asset("/login.png")
-                    : Image.asset("assets/login.png"),
+                    ? Image.asset("/app_logo.jpg")
+                    : Image.asset("assets/app_logo.jpg"),
+                const SizedBox(height: 30),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(
                       labelText: "Email",

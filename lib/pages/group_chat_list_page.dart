@@ -1,3 +1,4 @@
+import 'package:chat_app/helper/helper_function.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -10,15 +11,16 @@ import 'chat_list_page.dart';
 import 'auth/login_page.dart';
 
 class GroupChatListPage extends StatefulWidget {
-  String userName;
-  String email;
-  GroupChatListPage({Key? key, required this.userName, required this.email}) : super(key: key);
+  const GroupChatListPage({Key? key}) : super(key: key);
 
   @override
   State<GroupChatListPage> createState() => _GroupChatListPageState();
 }
 
 class _GroupChatListPageState extends State<GroupChatListPage> {
+  String userName = "";
+  String email = "";
+
   AuthService authService = AuthService();
   Stream? groups;
   bool _isLoading = false;
@@ -27,7 +29,17 @@ class _GroupChatListPageState extends State<GroupChatListPage> {
   @override
   void initState() {
     super.initState();
+    getUserNameAndEmail();
     getGroupStream();
+  }
+
+  getUserNameAndEmail() async {
+    await HelperFunction.getUserName().then((value) {
+      userName = value!;
+    });
+    await HelperFunction.getUserEmail().then((value) {
+      email = value!;
+    });
   }
 
   // string manipulation
@@ -85,7 +97,7 @@ class _GroupChatListPageState extends State<GroupChatListPage> {
                 height: 15,
               ),
               Text(
-                widget.userName,
+                userName,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -164,7 +176,7 @@ class _GroupChatListPageState extends State<GroupChatListPage> {
                             IconButton(
                               onPressed: () async {
                                 await authService.signOut().whenComplete(() {
-                                  nextScreenReplace(context, const LoginPage());
+                                  nextScreenReplace2(context, const LoginPage());
                                 });
                               },
                               icon: const Icon(
@@ -264,7 +276,7 @@ class _GroupChatListPageState extends State<GroupChatListPage> {
                       });
                       DatabaseService(
                           uid: FirebaseAuth.instance.currentUser!.uid)
-                          .createGroup(widget.userName,
+                          .createGroup(userName,
                           FirebaseAuth.instance.currentUser!.uid, groupName)
                           .whenComplete(() {
                         _isLoading = false;

@@ -19,9 +19,8 @@ class _UserSearchPageState extends State<UserSearchPage> {
   bool isLoading = false;
   QuerySnapshot? searchSnapshot;
   bool hasUserSearched = false;
-  String userName = "";
+  String currentUserName = "";
   User? user;
-
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
   getCurrentUserIdAndName() async {
     await HelperFunction.getUserName().then((value) {
       setState(() {
-        userName = value!;
+        currentUserName = value!;
       });
     });
     user = FirebaseAuth.instance.currentUser;
@@ -88,11 +87,13 @@ class _UserSearchPageState extends State<UserSearchPage> {
               ],
             ),
           ),
-          isLoading ? Center(
-            child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
-            ),
-          ) : groupList(),
+          isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+              : userList(),
         ],
       ),
     );
@@ -115,31 +116,34 @@ class _UserSearchPageState extends State<UserSearchPage> {
     }
   }
 
-  groupList() {
+  userList() {
     return hasUserSearched
         ? ListView.builder(
-      shrinkWrap: true,
-      itemCount: searchSnapshot!.docs.length,
-      itemBuilder: (context, index) {
-        return userListTile(
-          userName: searchSnapshot!.docs[index]['fullName'],
-          userId: searchSnapshot!.docs[index]['uid']
-        );
-      },
-    )
+            shrinkWrap: true,
+            itemCount: searchSnapshot!.docs.length,
+            itemBuilder: (context, index) {
+              return userListTile(
+                  userName: searchSnapshot!.docs[index]['fullName'],
+                  userId: searchSnapshot!.docs[index]['uid']);
+            },
+          )
         : Container();
   }
 
-
-  Widget userListTile(
-      {required String userName, required String userId}) {
-
+  Widget userListTile({required String userName, required String userId}) {
     return GestureDetector(
       child: ListTile(
         onTap: () {
-          nextScreenReplace(context, const ChatPage());
+          DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+              .addOneToOneChat(userId, userName, currentUserName)
+              .whenComplete(() {
+            Future.delayed(const Duration(seconds: 2), () {
+              nextScreen(context, const ChatPage());
+            });
+          });
         },
-        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         leading: CircleAvatar(
           radius: 30,
           backgroundColor: Theme.of(context).primaryColor,
@@ -149,7 +153,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
           ),
         ),
         title:
-        Text(userName, style: const TextStyle(fontWeight: FontWeight.w600)),
+            Text(userName, style: const TextStyle(fontWeight: FontWeight.w600)),
       ),
     );
   }

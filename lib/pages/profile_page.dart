@@ -128,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             IconButton(
                               onPressed: () async {
                                 await authService.signOut().whenComplete(() {
-                                  nextScreenReplace(context, const LoginPage());
+                                  nextScreenReplace2(context, const LoginPage());
                                 });
                               },
                               icon: const Icon(

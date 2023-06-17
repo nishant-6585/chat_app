@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/database_service.dart';
+import '../widgets/widgets.dart';
+import 'group_chat_page.dart';
 
 class GroupSearchPage extends StatefulWidget {
   const GroupSearchPage({Key? key}) : super(key: key);
@@ -166,8 +168,29 @@ class _GroupSearchPageState extends State<GroupSearchPage> {
       subtitle: Text("Admin: ${getName(admin)}"),
       trailing: InkWell(
         onTap: () async {
-          /*await DatabaseService(uid: user!.uid)
-            .toggleGroupJoin(groupId, userName, groupName);*/
+          await DatabaseService(uid: user!.uid)
+            .toggleGroupJoin(groupId, userName, groupName);
+          if (isJoined) {
+            setState(() {
+              isJoined = !isJoined;
+            });
+            if(context.mounted) {
+              showSnackBar(context, Colors.green, "Successfully joined the group");
+            }
+            Future.delayed(const Duration(seconds: 2), () {
+              nextScreen(
+                  context,
+                  GroupChatPage(
+                      groupId: groupId,
+                      groupName: groupName,
+                      userName: userName));
+            });
+          } else {
+            setState(() {
+              isJoined = !isJoined;
+              showSnackBar(context, Colors.red, "Left the group $groupName");
+            });
+          }
         },
         child: isJoined
             ? Container(

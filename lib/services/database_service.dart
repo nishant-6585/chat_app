@@ -44,6 +44,21 @@ class DatabaseService {
     return userCollection.doc(uid).snapshots();
   }
 
+  Future addOneToOneChat(String userId, String userName, String currentUserName) async {
+    DocumentReference currentUserDocumentReference = userCollection.doc(uid);
+
+    await currentUserDocumentReference.update({
+      "oneToOne":
+      FieldValue.arrayUnion(["${userId}_$userName"])
+    });
+
+    DocumentReference userDocumentReference = userCollection.doc(userId);
+    return await userDocumentReference.update({
+      "oneToOne":
+      FieldValue.arrayUnion(["${uid}_$currentUserName"])
+    });
+  }
+
   // creating a group
   Future createGroup(String userName, String id, String groupName) async {
     DocumentReference groupDocumentReference = await groupCollection.add({
@@ -71,7 +86,7 @@ class DatabaseService {
   }
 
   // getting the chats
-  getChats(String groupId) async {
+  getGroupChatMesaages(String groupId) async {
     return groupCollection
         .doc(groupId)
         .collection("groupMessages")
@@ -140,6 +155,16 @@ class DatabaseService {
         "members": FieldValue.arrayUnion(["${uid}_$userName"])
       });
     }
+  }
+
+  // send message
+  sendMessage(String groupId, Map<String, dynamic> chatMessageData) async {
+    groupCollection.doc(groupId).collection("groupMessages").add(chatMessageData);
+    groupCollection.doc(groupId).update({
+      "recentMessage": chatMessageData['message'],
+      "recentMessageSender": chatMessageData['sender'],
+      "recentMessageTime": chatMessageData['time'].toString(),
+    });
   }
 
 }

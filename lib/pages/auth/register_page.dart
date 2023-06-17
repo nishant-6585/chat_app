@@ -55,9 +55,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w400),
                       ),
+                      const SizedBox(height: 10),
                       kIsWeb
-                          ? Image.asset("/register.png")
-                          : Image.asset("assets/register.png"),
+                          ? Image.asset("/app_logo.jpg")
+                          : Image.asset("assets/app_logo.jpg"),
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
                             labelText: "Full Name",

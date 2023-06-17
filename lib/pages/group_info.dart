@@ -1,7 +1,9 @@
+import 'package:chat_app/pages/group_chat_list_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/database_service.dart';
+import '../widgets/widgets.dart';
 
 class GroupInfo extends StatefulWidget {
   final String groupId;
@@ -83,7 +85,7 @@ class _GroupInfoState extends State<GroupInfo> {
                   builder: (context) {
                     return AlertDialog(
                       title: const Text("Exit"),
-                      content: const Text("Are you sure you exit the group? "),
+                      content: const Text("Are you sure you exit the group?"),
                       actions: [
                         IconButton(
                           onPressed: () {
@@ -96,13 +98,13 @@ class _GroupInfoState extends State<GroupInfo> {
                         ),
                         IconButton(
                           onPressed: () async {
-                            /*DatabaseService(
+                            DatabaseService(
                                     uid: FirebaseAuth.instance.currentUser!.uid)
                                 .toggleGroupJoin(widget.groupId,
                                     getName(widget.adminName), widget.groupName)
                                 .whenComplete(() {
-                              nextScreenReplace(context, const HomePage());
-                            });*/
+                              nextScreenReplace(context, const GroupChatListPage());
+                            });
                           },
                           icon: const Icon(
                             Icons.done,

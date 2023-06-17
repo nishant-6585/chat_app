@@ -3,9 +3,11 @@ import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/pages/profile_page.dart';
 import 'package:chat_app/pages/user_search_page.dart';
 import 'package:chat_app/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
+import '../services/database_service.dart';
 import 'group_chat_list_page.dart';
 
 class ChatListPage extends StatefulWidget {
@@ -17,6 +19,7 @@ class ChatListPage extends StatefulWidget {
 
 class _ChatListPageState extends State<ChatListPage> {
   AuthService authService = AuthService();
+  Stream? chatList;
   String userName = "";
   String email = "";
 
@@ -24,6 +27,7 @@ class _ChatListPageState extends State<ChatListPage> {
   void initState() {
     super.initState();
     getUserData();
+    getChatListStream();
   }
 
   void getUserData() async {
@@ -32,6 +36,17 @@ class _ChatListPageState extends State<ChatListPage> {
     });
     await HelperFunction.getUserName().then((value) {
       userName = value!;
+    });
+  }
+
+  getChatListStream() async{
+    // getting the list of snapshots in our stream
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getUserGroups()
+        .then((snapshot) {
+      setState(() {
+        chatList = snapshot;
+      });
     });
   }
 
@@ -91,7 +106,7 @@ class _ChatListPageState extends State<ChatListPage> {
             ),
             ListTile(
               onTap: () {
-                nextScreenReplace(context, GroupChatListPage(userName: userName, email: email));
+                nextScreenReplace(context, const GroupChatListPage());
               },
               selectedColor: Theme.of(context).primaryColor,
               contentPadding:
@@ -153,7 +168,7 @@ class _ChatListPageState extends State<ChatListPage> {
                           IconButton(
                             onPressed: () async {
                               await authService.signOut().whenComplete(() {
-                                nextScreenReplace(context, const LoginPage());
+                                nextScreenReplace2(context, const LoginPage());
                               });
                             },
                             icon: const Icon(
