@@ -22,7 +22,7 @@ class _UserTileState extends State<UserTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        nextScreen(context, const ChatPage());
+        nextScreen(context, ChatPage(userId: widget.userId, userName: widget.userName));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),

@@ -138,7 +138,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
               .addOneToOneChat(userId, userName, currentUserName)
               .whenComplete(() {
             Future.delayed(const Duration(seconds: 2), () {
-              nextScreen(context, const ChatPage());
+              nextScreen(context, ChatPage(userId: userId, userName: userName));
             });
           });
         },

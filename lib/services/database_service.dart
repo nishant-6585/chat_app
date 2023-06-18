@@ -9,6 +9,10 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
 
+
+  final CollectionReference oneToOneMessageCollection =
+  FirebaseFirestore.instance.collection("oneToOneMessages");
+
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection("groups");
 
@@ -57,9 +61,24 @@ class DatabaseService {
     });
 
     DocumentReference userDocumentReference = userCollection.doc(userId);
-    return await userDocumentReference.update({
+    await userDocumentReference.update({
       "oneToOne":
       FieldValue.arrayUnion(["${uid}_$currentUserName"])
+    });
+
+    String groupChatId = "";
+    if (uid!.compareTo(userId) > 0) {
+      groupChatId = '$uid-$userId';
+    } else {
+      groupChatId = '$userId-$uid';
+    }
+
+    return await oneToOneMessageCollection.doc(groupChatId).set({
+      "members": [uid,userId],
+      "recentMessage": "",
+      "recentMessageSender": "",
+      "profilePic": "",
+      "groupChatId": groupChatId,
     });
   }
 
@@ -90,10 +109,27 @@ class DatabaseService {
   }
 
   // getting the chats
-  getGroupChatMesaages(String groupId) async {
+  getGroupChatMessages(String groupId) async {
     return groupCollection
         .doc(groupId)
         .collection("groupMessages")
+        .orderBy("time")
+        .snapshots();
+  }
+
+  // getting the chats
+  getChatMessages(String userId,) async {
+
+    String groupChatId = "";
+    if (uid!.compareTo(userId) > 0) {
+      groupChatId = '$uid-$userId';
+    } else {
+      groupChatId = '$userId-$uid';
+    }
+
+    return oneToOneMessageCollection
+        .doc(groupChatId)
+        .collection("chatMessages")
         .orderBy("time")
         .snapshots();
   }
@@ -169,6 +205,23 @@ class DatabaseService {
       "recentMessageSender": chatMessageData['sender'],
       "recentMessageTime": chatMessageData['time'].toString(),
     });
+  }
+
+  void sendOneToOneMessage(String userId, Map<String, dynamic> chatMessageMap) {
+    String groupChatId = "";
+    if (uid!.compareTo(userId) > 0) {
+      groupChatId = '$uid-$userId';
+    } else {
+      groupChatId = '$userId-$uid';
+    }
+
+    oneToOneMessageCollection.doc(groupChatId).collection("chatMessages").add(chatMessageMap);
+    oneToOneMessageCollection.doc(groupChatId).update({
+      "recentMessage": chatMessageMap['message'],
+      "recentMessageSender": chatMessageMap['sender'],
+      "recentMessageTime": chatMessageMap['time'].toString(),
+    });
+
   }
 
 }

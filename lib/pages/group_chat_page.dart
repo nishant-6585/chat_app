@@ -34,7 +34,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
   }
 
   getChatAndAdmin() {
-    DatabaseService().getGroupChatMesaages(widget.groupId).then((val) {
+    DatabaseService().getGroupChatMessages(widget.groupId).then((val) {
       setState(() {
         chats = val;
       });
