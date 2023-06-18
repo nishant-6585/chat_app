@@ -63,7 +63,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Search users....",
+                        hintText: "Search users by name...",
                         hintStyle:
                             TextStyle(color: Colors.white, fontSize: 16)),
                   ),

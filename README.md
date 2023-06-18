@@ -10,6 +10,22 @@ Chat app using Firebase
 
 ## Screen Shots
 <img src="screenshot/loginPage.png" width="220" height="400">
+<img src="screenshot/registrationPage.png" width="220" height="400">
+<img src="screenshot/emptyChatListPage.png" width="220" height="400">
+<img src="screenshot/drawer.png" width="220" height="400">
+<img src="screenshot/searchUserByName.png" width="220" height="400">
+<img src="screenshot/userSearched.png" width="220" height="400">
+<img src="screenshot/user1ChatPage.png" width="220" height="400">
+<img src="screenshot/user2ChatPage.png" width="220" height="400">
+<img src="screenshot/groupChatListPage.png" width="220" height="400">
+<img src="screenshot/createGroup.png" width="220" height="400">
+<img src="screenshot/groupCreated.png" width="220" height="400">
+<img src="screenshot/groupSearchPage.png" width="220" height="400">
+<img src="screenshot/groupSearchList.png" width="220" height="400">
+<img src="screenshot/groupJoinedScreen.png" width="220" height="400">
+<img src="screenshot/groupChatPage.png" width="220" height="400">
+<img src="screenshot/groupInfoPage.png" width="220" height="400">
+
 
 This project is a starting point for a Flutter application.
 

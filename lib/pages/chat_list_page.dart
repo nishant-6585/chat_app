@@ -242,9 +242,15 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 
   noUsersWidget() {
-    return const Text(
+    return const Center(
+      child: Text(
+        "There are no users added to chat list. Please tap on search icon on top right and search for user to start chatting with",
+        textAlign: TextAlign.center,
+      ),
+    );
+    /*return const Text(
       "There are no users added to chat list. Please tap on search icon on top right and search for user to start chatting with",
       textAlign: TextAlign.center,
-    );
+    );*/
   }
 }

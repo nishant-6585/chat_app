@@ -68,7 +68,7 @@ class _GroupSearchPageState extends State<GroupSearchPage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Search groups....",
+                        hintText: "Search groups by name....",
                         hintStyle:
                             TextStyle(color: Colors.white, fontSize: 16)),
                   ),
