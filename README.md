@@ -8,8 +8,8 @@ Chat app using Firebase
 1. Add firebase to this project and do check the google-services.json and GoogleServices-Info.plist file
 2. Now run the app
 
-
-![App UI](screenshot/loginPage.png)
+## Screen Shots
+<img src="screenshot/loginPage.png" width="220" height="400">
 
 This project is a starting point for a Flutter application.
 
