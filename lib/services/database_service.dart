@@ -44,6 +44,10 @@ class DatabaseService {
     return userCollection.doc(uid).snapshots();
   }
 
+  getOneToOneChatList() async{
+    return userCollection.doc(uid).snapshots();
+  }
+
   Future addOneToOneChat(String userId, String userName, String currentUserName) async {
     DocumentReference currentUserDocumentReference = userCollection.doc(uid);
 

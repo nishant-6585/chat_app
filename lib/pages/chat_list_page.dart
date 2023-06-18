@@ -2,12 +2,14 @@ import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/pages/profile_page.dart';
 import 'package:chat_app/pages/user_search_page.dart';
+import 'package:chat_app/widgets/group_tile.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
+import '../widgets/user_tile.dart';
 import 'group_chat_list_page.dart';
 
 class ChatListPage extends StatefulWidget {
@@ -19,7 +21,7 @@ class ChatListPage extends StatefulWidget {
 
 class _ChatListPageState extends State<ChatListPage> {
   AuthService authService = AuthService();
-  Stream? chatList;
+  Stream? userListStream;
   String userName = "";
   String email = "";
 
@@ -27,7 +29,7 @@ class _ChatListPageState extends State<ChatListPage> {
   void initState() {
     super.initState();
     getUserData();
-    getChatListStream();
+    geUserListStream();
   }
 
   void getUserData() async {
@@ -39,15 +41,24 @@ class _ChatListPageState extends State<ChatListPage> {
     });
   }
 
-  getChatListStream() async{
+  geUserListStream() async {
     // getting the list of snapshots in our stream
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-        .getUserGroups()
+        .getOneToOneChatList()
         .then((snapshot) {
       setState(() {
-        chatList = snapshot;
+        userListStream = snapshot;
       });
     });
+  }
+
+  // string manipulation
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  String getName(String res) {
+    return res.substring(res.indexOf("_") + 1);
   }
 
   @override
@@ -192,6 +203,48 @@ class _ChatListPageState extends State<ChatListPage> {
           ],
         ),
       ),
+      body: userList(),
+    );
+  }
+
+  userList() {
+    return StreamBuilder(
+      stream: userListStream,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data['oneToOne'] != null) {
+            if (snapshot.data['oneToOne'].length != 0) {
+              return ListView.builder(
+                itemCount: snapshot.data['oneToOne'].length,
+                itemBuilder: (BuildContext context, int index) {
+                  int reverseIndex =
+                      snapshot.data['oneToOne'].length - index - 1;
+                  return UserTile(
+                      userId: getId(snapshot.data['oneToOne'][reverseIndex]),
+                      userName:
+                          getName(snapshot.data['oneToOne'][reverseIndex]));
+                },
+              );
+            } else {
+              return noUsersWidget();
+            }
+          } else {
+            return noUsersWidget();
+          }
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor),
+          );
+        }
+      },
+    );
+  }
+
+  noUsersWidget() {
+    return const Text(
+      "There are no users added to chat list. Please tap on search icon on top right and search for user to start chatting with",
+      textAlign: TextAlign.center,
     );
   }
 }
